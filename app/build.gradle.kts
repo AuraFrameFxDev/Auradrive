@@ -5,9 +5,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.compose)
-
-    id("com.google.devtools.ksp") version "2.2.0"
-
     alias(libs.plugins.ksp)
 
     id("org.openapi.generator") version "7.14.0"
