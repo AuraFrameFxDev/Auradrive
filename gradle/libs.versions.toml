@@ -65,7 +65,7 @@ hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 
 # Code Quality
-spotless = { id = "com.diffplug.spotless", version = "6.25.0" }
+spotless = { id = "com.diffplug.spotless", version = "7.2.1" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.6" }
 
 [libraries]
