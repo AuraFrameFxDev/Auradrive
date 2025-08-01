@@ -1,0 +1,131 @@
+name: CI
+
+on:
+  push:
+    branches: [Alpha]
+  pull_request:
+    branches: [Alpha]
+  workflow_dispatch:
+
+permissions: all
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout source code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Gradle Wrapper Validation (security best practice)
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v2
+
+      # Auto-detect Java version (uses Gradle's toolchains if configured)
+      - name: Set up Java (auto-detect)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 'auto'
+
+      # Set up Android SDK
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      # Cache Gradle dependencies
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
+
+      # Build and test (Android/Kotlin/Java) with config cache and parallel
+      - name: Gradle Build & Unit Test (parallel, config cache)
+        run: ./gradlew clean test --configuration-cache --parallel
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # Cache Python dependencies
+      - name: Cache Python dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            pip-${{ runner.os }}-
+
+      # Install Python dependencies
+      - name: Install Python dependencies
+        run: |
+          pip install -r app/ai_backend/requirements.txt
+          pip install -r app/ai_backend/requirements-test.txt
+
+      # Run Python unit tests
+      - name: Unit test (Python)
+        run: pytest app/ai_backend
+
+      # Upload build artifacts (customize paths as needed)
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            app/build/outputs/
+            build/reports/
+
+  openapi-generate-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # needed to push changes
+
+     - name: Set up Java (auto-detect)
+  uses: actions/setup-java@v4
+  with:
+    distribution: 'temurin'
+    java-version: 'auto'
+
+      - name: Install OpenAPI Generator CLI
+        run: |
+          wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.6.0/openapi-generator-cli-7.6.0.jar -O openapi-generator-cli.jar
+
+      # Generate Kotlin code from openapi.yml
+      - name: Generate Kotlin API code from openapi.yml
+        run: |
+          java -jar openapi-generator-cli.jar generate \
+            -i openapi.yml \
+            -g kotlin \
+            -o generated/openapi-kotlin
+
+      # Generate Python code from api-spec/aura-framefx-api.yaml
+      - name: Generate Python API code from api-spec/aura-framefx-api.yaml
+        run: |
+          java -jar openapi-generator-cli.jar generate \
+            -i api-spec/aura-framefx-api.yaml \
+            -g python \
+            -o generated/api-spec-python
+
+      # Add generated files to git, commit if changes exist
+      - name: Commit generated files
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add generated/
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: Regenerate OpenAPI client code"
+            git push
+          else
+            echo "No changes to commit."
+          fi
