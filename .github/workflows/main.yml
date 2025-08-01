@@ -2,9 +2,9 @@ name: Genesis OS Full Auto Build & Assemble
 
 on:
   push:
-    branches: [ main, master, develop ]
+    branches: [ main, master, develop, Alpha ]
   pull_request:
-    branches: [ main, master, develop ]
+    branches: [ main, master, develop Alpha ]
   workflow_dispatch:
 
 jobs:
