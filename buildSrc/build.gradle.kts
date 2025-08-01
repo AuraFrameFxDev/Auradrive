@@ -4,12 +4,6 @@ plugins {
     kotlin("jvm") version "2.2.0"
 }
 
-repositories {
-    gradlePluginPortal()
-    google()
-    mavenCentral()
-}
-
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(24))
