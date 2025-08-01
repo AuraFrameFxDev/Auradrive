@@ -1,7 +1,6 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    id("android-library-conventions")
+    id("kotlin-kapt")
 }
 
 android {
@@ -41,6 +40,12 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
+    
+    sourceSets {
+        getByName("main") {
+            kotlin.srcDir("build/generated/openapi/src/main/kotlin")
+        }
+    }
 }
 
 dependencies {
@@ -58,10 +63,17 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    
+    // OpenAPI Generated Code Dependencies
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.kotlinx.serialization.json)
 
-    // System interaction and documentation
-    implementation(libs.yuki) // If defined in libs.versions.toml
-    implementation(libs.lsposed) // If defined in libs.versions.toml
+    // System interaction and documentation (using local JAR files)
+    implementation(files("${project.rootDir}/Libs/api-82.jar"))
+    implementation(files("${project.rootDir}/Libs/api-82-sources.jar"))
     // Dokka for documentation
     plugins.apply("org.jetbrains.dokka")
 

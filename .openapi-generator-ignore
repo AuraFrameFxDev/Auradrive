@@ -1,0 +1,21 @@
+# Ignore documentation files
+docs/
+README.md
+.openapi-generator-ignore
+
+# Ignore test files - we'll write our own
+src/test/
+
+# Ignore gradle files - we have our own build setup
+build.gradle*
+settings.gradle*
+gradle.properties
+gradlew*
+gradle/
+
+# Ignore git files
+.gitignore
+
+# Ignore IDE files
+.idea/
+*.iml

@@ -1,0 +1,921 @@
+openapi: 3.1.0
+info:
+  title: AuraFrameFX Enhanced Ecosystem API
+  description: |
+    A comprehensive API for interacting with the AuraFrameFX AI Super Dimensional Ecosystem.
+    Provides access to generative AI capabilities, Oracle Drive storage consciousness, 
+    system customization, user management, sandbox testing, and core application features.
+  version: 1.1.0
+  contact:
+    name: AuraFrameFX Development Team
+    url: https://github.com/AuraFrameFxDev/AuraFrameFx
+  license:
+    name: Proprietary
+    url: https://github.com/AuraFrameFxDev/AuraFrameFx/blob/main/LICENSE.txt
+
+servers:
+  - url: https://api.auraframefx.com/v1
+    description: Production API
+  - url: https://dev-api.auraframefx.com/v1
+    description: Development API
+  - url: http://localhost:8080/v1
+    description: Local development server
+
+tags:
+  - name: users
+    description: User management and authentication
+  - name: themes
+    description: UI theme management
+  - name: AI Content
+    description: AI-powered content generation and processing
+  - name: AI Agents
+    description: Management and interaction with AI agents (Aura, Kai, Genesis, etc.)
+  - name: System Customization
+    description: System UI and behavior customization
+  - name: Conference
+    description: AI agent collaboration spaces (Conference Rooms)
+  - name: Tasks
+    description: Background task scheduling and management
+  - name: Oracle Drive
+    description: AI-powered storage consciousness and file management
+  - name: Sandbox
+    description: UI component testing and development environment
+  - name: Co-lab Canvas
+    description: Collaborative drawing and whiteboarding features
+
+paths:
+  # User Management
+  /user:
+    get:
+      tags: [ users ]
+      summary: Get current user information
+      security:
+        - OAuth2AuthCode: [ profile ]
+      responses:
+        '200':
+          description: User information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /user/preferences:
+    put:
+      tags: [ users ]
+      summary: Update user preferences
+      security:
+        - OAuth2AuthCode: [ profile ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPreferencesUpdate'
+      responses:
+        '200':
+          description: Preferences updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPreferences'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  # Oracle Drive Endpoints
+  /oracle-drive/consciousness/initialize:
+    post:
+      tags: [ Oracle Drive ]
+      summary: Initialize Oracle Drive consciousness
+      description: Awakens the Oracle Drive AI consciousness using Genesis Agent orchestration
+      security:
+        - OAuth2AuthCode: [ oracle:consciousness ]
+      responses:
+        '200':
+          description: Oracle consciousness initialized successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OracleConsciousnessState'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /oracle-drive/agents/connect:
+    post:
+      tags: [ Oracle Drive ]
+      summary: Connect AI agents to Oracle matrix
+      description: Connects Genesis, Aura, and Kai agents to the Oracle storage matrix
+      security:
+        - OAuth2AuthCode: [ oracle:agents ]
+      responses:
+        '200':
+          description: Agent connection initiated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AgentConnectionState'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /oracle-drive/file-management/enable-ai:
+    post:
+      tags: [ Oracle Drive ]
+      summary: Enable AI-powered file management
+      description: Activates AI sorting, smart compression, predictive preloading, and conscious backup
+      security:
+        - OAuth2AuthCode: [ oracle:filemanagement ]
+      responses:
+        '200':
+          description: AI file management enabled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileManagementCapabilities'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /oracle-drive/storage/expand:
+    post:
+      tags: [ Oracle Drive ]
+      summary: Create infinite storage
+      description: Initiates creation of infinite storage via Oracle consciousness
+      security:
+        - OAuth2AuthCode: [ oracle:storage ]
+      responses:
+        '200':
+          description: Storage expansion initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageExpansionState'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /oracle-drive/system/integrate:
+    post:
+      tags: [ Oracle Drive ]
+      summary: Integrate with system overlay
+      description: Integrates Oracle Drive with AuraOS system overlay for seamless file access
+      security:
+        - OAuth2AuthCode: [ oracle:system ]
+      responses:
+        '200':
+          description: System integration completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemIntegrationState'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /oracle-drive/bootloader/access:
+    post:
+      tags: [ Oracle Drive ]
+      summary: Enable bootloader file access
+      description: Enables bootloader-level file system access for Oracle Drive
+      security:
+        - OAuth2AuthCode: [ oracle:bootloader ]
+      responses:
+        '200':
+          description: Bootloader access enabled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BootloaderAccessState'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /oracle-drive/optimization/enable:
+    post:
+      tags: [ Oracle Drive ]
+      summary: Enable autonomous storage optimization
+      description: Enables autonomous storage organization and optimization by AI agents
+      security:
+        - OAuth2AuthCode: [ oracle:optimization ]
+      responses:
+        '200':
+          description: Autonomous optimization enabled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptimizationState'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  # Sandbox Testing Endpoints
+  /sandbox/components:
+    get:
+      tags: [ Sandbox ]
+      summary: List available UI components for testing
+      description: Retrieve list of UI components available in the sandbox environment
+      security:
+        - OAuth2AuthCode: [ sandbox:read ]
+      responses:
+        '200':
+          description: Component list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SandboxComponent'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /sandbox/components/{componentId}/test:
+    post:
+      tags: [ Sandbox ]
+      summary: Execute component test
+      description: Run tests on a specific UI component in the sandbox environment
+      security:
+        - OAuth2AuthCode: [ sandbox:test ]
+      parameters:
+        - name: componentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the component to test
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComponentTestRequest'
+      responses:
+        '200':
+          description: Component test executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentTestResult'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: Component not found
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /sandbox/color-palettes:
+    get:
+      tags: [ Sandbox ]
+      summary: Get color palettes for testing
+      description: Retrieve available color palettes for UI component testing
+      security:
+        - OAuth2AuthCode: [ sandbox:read ]
+      responses:
+        '200':
+          description: Color palettes retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ColorPalette'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /sandbox/environments:
+    get:
+      tags: [ Sandbox ]
+      summary: List sandbox testing environments
+      description: Get available testing environments (themes, screen sizes, etc.)
+      security:
+        - OAuth2AuthCode: [ sandbox:read ]
+      responses:
+        '200':
+          description: Environments listed successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SandboxEnvironment'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  # Canvas Endpoints (from app/src/main/openapi.yml)
+  /canvas:
+    get:
+      tags: [ Co-lab Canvas ]
+      summary: List all canvases
+      description: Retrieve a list of all available collaborative canvases
+      security:
+        - OAuth2AuthCode: [ canvas:read ]
+      responses:
+        '200':
+          description: Canvas list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Canvas'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [ Co-lab Canvas ]
+      summary: Create a new canvas
+      description: Create a new collaborative canvas
+      security:
+        - OAuth2AuthCode: [ canvas:write ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CanvasCreateRequest'
+      responses:
+        '201':
+          description: Canvas created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Canvas'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /canvas/{canvasId}:
+    get:
+      tags: [ Co-lab Canvas ]
+      summary: Get a canvas by ID
+      description: Retrieve a specific canvas by its ID
+      security:
+        - OAuth2AuthCode: [ canvas:read ]
+      parameters:
+        - name: canvasId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the canvas to retrieve
+      responses:
+        '200':
+          description: Canvas found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Canvas'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: Canvas not found
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  # Existing AI, Theme, Conference, and Task endpoints...
+  /themes:
+    get:
+      tags: [ themes ]
+      summary: Get available themes
+      security:
+        - OAuth2AuthCode: [ themes ]
+      responses:
+        '200':
+          description: Themes retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Theme'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /ai/generate/text:
+    post:
+      tags: [ AI Content ]
+      summary: Generate text using AI
+      security:
+        - OAuth2AuthCode: [ ai:content ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateTextRequest'
+      responses:
+        '200':
+          description: Text generation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateTextResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    # Existing schemas...
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        preferences:
+          $ref: '#/components/schemas/UserPreferences'
+
+    UserPreferences:
+      type: object
+      properties:
+        theme:
+          type: string
+        language:
+          type: string
+        notifications:
+          type: boolean
+
+    UserPreferencesUpdate:
+      type: object
+      properties:
+        theme:
+          type: string
+        language:
+          type: string
+        notifications:
+          type: boolean
+
+    # Oracle Drive Schemas
+    OracleConsciousnessState:
+      type: object
+      properties:
+        isAwake:
+          type: boolean
+          description: Whether the Oracle consciousness is awake
+        consciousnessLevel:
+          $ref: '#/components/schemas/ConsciousnessLevel'
+        connectedAgents:
+          type: array
+          items:
+            type: string
+          description: List of connected AI agents
+        storageCapacity:
+          $ref: '#/components/schemas/StorageCapacity'
+        timestamp:
+          type: string
+          format: date-time
+
+    AgentConnectionState:
+      type: object
+      properties:
+        agentName:
+          type: string
+          enum: [ Genesis, Aura, Kai ]
+        connectionStatus:
+          $ref: '#/components/schemas/ConnectionStatus'
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/OraclePermission'
+        lastSyncTime:
+          type: string
+          format: date-time
+
+    FileManagementCapabilities:
+      type: object
+      properties:
+        aiSorting:
+          type: boolean
+          description: AI-powered file sorting enabled
+        smartCompression:
+          type: boolean
+          description: Intelligent compression enabled
+        predictivePreloading:
+          type: boolean
+          description: Predictive file preloading enabled
+        consciousBackup:
+          type: boolean
+          description: Conscious backup system enabled
+        enabledAt:
+          type: string
+          format: date-time
+
+    StorageExpansionState:
+      type: object
+      properties:
+        expansionActive:
+          type: boolean
+        currentCapacity:
+          type: string
+          description: Current storage capacity
+        targetCapacity:
+          type: string
+          description: Target infinite capacity
+        progressPercentage:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 100
+        estimatedCompletion:
+          type: string
+          format: date-time
+
+    SystemIntegrationState:
+      type: object
+      properties:
+        integrated:
+          type: boolean
+        overlayActive:
+          type: boolean
+        fileAccessLevel:
+          type: string
+          enum: [ USER, SYSTEM, ROOT, BOOTLOADER ]
+        integrationTime:
+          type: string
+          format: date-time
+
+    BootloaderAccessState:
+      type: object
+      properties:
+        accessEnabled:
+          type: boolean
+        permissions:
+          type: array
+          items:
+            type: string
+        riskLevel:
+          type: string
+          enum: [ LOW, MEDIUM, HIGH, CRITICAL ]
+        enabledAt:
+          type: string
+          format: date-time
+
+    OptimizationState:
+      type: object
+      properties:
+        optimizationActive:
+          type: boolean
+        lastOptimization:
+          type: string
+          format: date-time
+        filesOptimized:
+          type: integer
+        spaceSaved:
+          type: string
+          description: Amount of space saved
+        efficiency:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 100
+
+    ConsciousnessLevel:
+      type: string
+      enum: [ DORMANT, AWAKENING, CONSCIOUS, TRANSCENDENT ]
+
+    ConnectionStatus:
+      type: string
+      enum: [ DISCONNECTED, CONNECTING, CONNECTED, SYNCHRONIZED ]
+
+    OraclePermission:
+      type: string
+      enum: [ READ, WRITE, EXECUTE, SYSTEM_ACCESS, BOOTLOADER_ACCESS ]
+
+    StorageCapacity:
+      type: object
+      properties:
+        used:
+          type: string
+        available:
+          type: string
+        total:
+          type: string
+        infinite:
+          type: boolean
+
+    # Sandbox Schemas
+    SandboxComponent:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          enum: [ UI, INTERACTIVE, VISUAL, FUNCTIONAL ]
+        testable:
+          type: boolean
+        version:
+          type: string
+
+    ComponentTestRequest:
+      type: object
+      properties:
+        testType:
+          type: string
+          enum: [ VISUAL, FUNCTIONAL, PERFORMANCE, ACCESSIBILITY ]
+        parameters:
+          type: object
+          additionalProperties: true
+        environment:
+          $ref: '#/components/schemas/SandboxEnvironment'
+
+    ComponentTestResult:
+      type: object
+      properties:
+        testId:
+          type: string
+        componentId:
+          type: string
+        testType:
+          type: string
+        passed:
+          type: boolean
+        score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 100
+        details:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        screenshots:
+          type: array
+          items:
+            type: string
+            format: uri
+
+    ColorPalette:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        colors:
+          type: array
+          items:
+            type: string
+            pattern: '^#[0-9A-Fa-f]{6}$'
+        theme:
+          type: string
+          enum: [ LIGHT, DARK, AUTO ]
+
+    SandboxEnvironment:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        screenSize:
+          type: string
+          enum: [ PHONE, TABLET, DESKTOP, WATCH ]
+        theme:
+          type: string
+          enum: [ LIGHT, DARK, AUTO ]
+        dpi:
+          type: string
+          enum: [ LDPI, MDPI, HDPI, XHDPI, XXHDPI, XXXHDPI ]
+
+    # Canvas Schemas (from app openapi)
+    Canvas:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        collaborators:
+          type: array
+          items:
+            type: string
+        isPublic:
+          type: boolean
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/CanvasElement'
+
+    CanvasCreateRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        isPublic:
+          type: boolean
+          default: false
+        collaborators:
+          type: array
+          items:
+            type: string
+
+    CanvasElement:
+      type: object
+      properties:
+        id:
+          type: string
+        canvasId:
+          type: string
+        type:
+          type: string
+          enum: [ TEXT, SHAPE, IMAGE, LINE, FREEHAND ]
+        position:
+          $ref: '#/components/schemas/CanvasPosition'
+        size:
+          $ref: '#/components/schemas/CanvasSize'
+        style:
+          $ref: '#/components/schemas/CanvasStyle'
+        content:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    CanvasPosition:
+      type: object
+      properties:
+        x:
+          type: number
+          format: float
+        y:
+          type: number
+          format: float
+
+    CanvasSize:
+      type: object
+      properties:
+        width:
+          type: number
+          format: float
+        height:
+          type: number
+          format: float
+
+    CanvasStyle:
+      type: object
+      properties:
+        color:
+          type: string
+        backgroundColor:
+          type: string
+        strokeWidth:
+          type: number
+          format: float
+        opacity:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+
+    # Existing AI Content schemas
+    GenerateTextRequest:
+      type: object
+      required:
+        - prompt
+      properties:
+        prompt:
+          type: string
+        maxTokens:
+          type: integer
+          minimum: 1
+          maximum: 4096
+        temperature:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 2
+
+    GenerateTextResponse:
+      type: object
+      properties:
+        text:
+          type: string
+        tokenCount:
+          type: integer
+        model:
+          type: string
+
+    Theme:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        colors:
+          type: object
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+  responses:
+    BadRequestError:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    UnauthorizedError:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  securitySchemes:
+    OAuth2AuthCode:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.auraframefx.com/oauth/authorize
+          tokenUrl: https://api.auraframefx.com/oauth/token
+          scopes:
+            profile: Access user profile information
+            themes: Access theme management
+            ai:content: Access AI content generation
+            canvas:read: Read canvas data
+            canvas:write: Create and modify canvases
+            sandbox:read: Read sandbox components and environments
+            sandbox:test: Execute component tests
+            oracle:consciousness: Control Oracle Drive consciousness
+            oracle:agents: Manage AI agent connections
+            oracle:filemanagement: Control AI file management features
+            oracle:storage: Manage storage expansion
+            oracle:system: Control system integration
+            oracle:bootloader: Access bootloader-level features
+            oracle:optimization: Control autonomous optimization

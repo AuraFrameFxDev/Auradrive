@@ -1,9 +1,8 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    id("android-library-conventions")
+    id("openapi-generation-conventions")
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -54,6 +53,12 @@ android {
             )
         }
     }
+    
+    sourceSets {
+        getByName("main") {
+            kotlin.srcDir("build/generated/openapi/src/main/kotlin")
+        }
+    }
 }
 
 kotlin {
@@ -90,6 +95,13 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
+    
+    // OpenAPI Generated Code Dependencies
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.kotlinx.serialization.json)
 
     // Core library desugaring
     coreLibraryDesugaring(libs.coreLibraryDesugaring)
@@ -103,8 +115,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    // System interaction and documentation
-    implementation(libs.yuki) // If defined in libs.versions.toml
-    implementation(libs.lsposed) // If defined in libs.versions.toml
-    dokkaHtmlPlugin(libs.dokka)
+    // System interaction and documentation (using local JAR files)
+    implementation(files("${project.rootDir}/Libs/api-82.jar"))
+    implementation(files("${project.rootDir}/Libs/api-82-sources.jar"))
+    // Note: dokka is typically applied as a plugin, not as a dependency
 }

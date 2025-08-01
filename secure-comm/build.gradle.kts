@@ -56,6 +56,12 @@ android {
             "/META-INF/LGPL2.1"
         )
     }
+    
+    sourceSets {
+        getByName("main") {
+            kotlin.srcDir("build/generated/openapi/src/main/kotlin")
+        }
+    }
 }
 
 kotlin {
@@ -102,9 +108,9 @@ dependencies {
     // Bouncy Castle for cryptographic operations
     implementation("org.bouncycastle:bcprov-jdk18on:1.81")
 
-    // System interaction and documentation
-    implementation(libs.yuki) // If defined in libs.versions.toml
-    implementation(libs.lsposed) // If defined in libs.versions.toml
+    // System interaction and documentation (using local JAR files)
+    implementation(files("${project.rootDir}/Libs/api-82.jar"))
+    implementation(files("${project.rootDir}/Libs/api-82-sources.jar"))
     // Dokka for documentation
     plugins.apply("org.jetbrains.dokka")
 }

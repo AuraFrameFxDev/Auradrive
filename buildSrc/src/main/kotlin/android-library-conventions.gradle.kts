@@ -6,7 +6,8 @@ import org.gradle.kotlin.dsl.getByType
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    // id("com.google.devtools.ksp") // Uncomment if KSP is required
+    id("com.google.devtools.ksp") // Enable KSP for annotation processing
+    id("com.google.dagger.hilt.android") // Enable Hilt for dependency injection
 }
 
 android {

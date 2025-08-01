@@ -1,9 +1,8 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    id("android-library-conventions")
+    id("openapi-generation-conventions")
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -48,6 +47,12 @@ android {
             "/META-INF/LGPL2.1"
         )
     }
+    
+    sourceSets {
+        getByName("main") {
+            kotlin.srcDir("build/generated/openapi/src/main/kotlin")
+        }
+    }
 
     testOptions {
         unitTests {
@@ -90,22 +95,26 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     // Room
     implementation(libs.room.runtime)
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
 
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
 
     // OkHttp
     implementation(libs.okhttp)
-    implementation(libs.okhttp.logging)
+    implementation(libs.okhttp3.logging.interceptor)
+    
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 
     // Coil
-    implementation(libs.coil)
+    implementation(libs.coil.compose)
 
     // Accompanist
     implementation(libs.bundles.accompanist)
@@ -118,10 +127,9 @@ dependencies {
     // Debug
     debugImplementation(libs.leakcanary.android)
 
-    // Yuki and LSPosed for system interaction
-    implementation(libs.yuki) // If defined in libs.versions.toml
-    implementation(libs.lsposed) // If defined in libs.versions.toml
+    // Yuki and LSPosed for system interaction (using local JAR files)
+    implementation(files("${project.rootDir}/Libs/api-82.jar"))
+    implementation(files("${project.rootDir}/Libs/api-82-sources.jar"))
 
-    // Dokka for documentation
-    dokkaHtmlPlugin(libs.dokka)
+    // Note: dokka is typically applied as a plugin, not as a dependency
 }

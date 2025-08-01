@@ -35,7 +35,8 @@ android {
 }
 
 dependencies {
-    implementation(libs.yuki)
-    implementation(libs.lsposed)
+    // System interaction and documentation (using local JAR files)
+    implementation(files("${project.rootDir}/Libs/api-82.jar"))
+    implementation(files("${project.rootDir}/Libs/api-82-sources.jar"))
     plugins.apply("org.jetbrains.dokka")
 }

@@ -36,6 +36,9 @@ dependencies {
     implementation("com.google.dagger:hilt-android-gradle-plugin:2.57")
     implementation("com.diffplug.spotless:spotless-plugin-gradle:7.2.1")
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.8")
+    
+    // OpenAPI Generator
+    implementation("org.openapitools:openapi-generator-gradle-plugin:7.8.0")
 
     // Testing
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")

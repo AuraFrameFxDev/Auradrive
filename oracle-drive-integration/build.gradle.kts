@@ -79,9 +79,9 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.test.manifest)
 
-    // System interaction and documentation
-    implementation(libs.yuki) // If defined in libs.versions.toml
-    implementation(libs.lsposed) // If defined in libs.versions.toml
+    // System interaction and documentation (using local JAR files)
+    implementation(files("${project.rootDir}/Libs/api-82.jar"))
+    implementation(files("${project.rootDir}/Libs/api-82-sources.jar"))
     // Dokka for documentation
     plugins.apply("org.jetbrains.dokka")
 }

@@ -1,7 +1,7 @@
 [versions]
 # Build Tools
-agp = "8.11.1"
-gradle = "8.14.3"
+agp = "8.13.0"
+gradle = "9.0.0"
 kotlin = "2.2.0"
 ksp = "2.2.0-2.0.2"  # Updated for Kotlin 2.2.0 compatibility
 
@@ -35,6 +35,23 @@ coilCompose = "2.7.0"
 coreLibraryDesugaring = "2.1.5"
 ndk = "26.2.11394342"
 
+# Documentation and System
+yuki = "2.0.1"
+lsposed = "1.9.2"
+dokka = "1.9.20"
+
+# Room Database (version)
+roomVersion = "2.6.1"
+
+# OkHttp (additional)
+okhttp-core = "5.1.0"
+
+# Accompanist
+accompanist = "0.34.0"
+
+# Memory Leak Detection
+leakcanary = "2.14"
+
 # Testing
 junit = "4.13.2"
 extJunit = "1.3.0"
@@ -43,6 +60,9 @@ mockk = "1.14.5"
 turbine = "1.2.1"
 archCoreTesting = "2.2.0"
 coroutinesTest = "1.10.2"
+
+# Coroutines
+kotlinx-coroutines = "1.10.2"
 
 [plugins]
 # Core Android
@@ -65,9 +85,11 @@ hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 
 # Code Quality
-
 spotless = { id = "com.diffplug.spotless", version = "7.2.1" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.6" }
+
+# Documentation
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 
 
 [libraries]
@@ -100,6 +122,34 @@ okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
 
+# Documentation and System Libraries
+yuki = { group = "com.github.Yuki-Nagato", name = "YukiHookAPI", version.ref = "yuki" }
+lsposed = { group = "de.robv.android.xposed", name = "api", version.ref = "lsposed" }
+dokka = { group = "org.jetbrains.dokka", name = "dokka-core", version.ref = "dokka" }
+
+# Kotlin Standard Library
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+
+# Room Database
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
+
+# OkHttp Additional
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp-core" }
+
+# Accompanist Libraries
+accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
+accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
+accompanist-navigation-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanist" }
+
+# Memory Leak Detection
+leakcanary-android = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary" }
+
+# Coroutines
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+
 # Core Library Desugaring
 coreLibraryDesugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "coreLibraryDesugaring" }
 
@@ -113,7 +163,6 @@ mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 androidx-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archCoreTesting" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
-kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutinesTest" }
 junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version = "5.13.4" }
 
 [bundles]
@@ -122,6 +171,17 @@ compose = [
     "androidx-compose-ui-graphics",
     "androidx-compose-ui-tooling-preview",
     "androidx-compose-material3"
+]
+
+coroutines = [
+    "kotlinx-coroutines-core",
+    "kotlinx-coroutines-android"
+]
+
+accompanist = [
+    "accompanist-systemuicontroller",
+    "accompanist-permissions",
+    "accompanist-navigation-animation"
 ]
 
 testing = [

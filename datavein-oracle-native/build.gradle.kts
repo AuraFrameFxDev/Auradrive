@@ -1,8 +1,5 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    id("android-library-conventions")
 }
 
 android {
@@ -11,7 +8,6 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -85,6 +81,12 @@ android {
             "/META-INF/LGPL2.1"
         )
     }
+    
+    sourceSets {
+        getByName("main") {
+            kotlin.srcDir("build/generated/openapi/src/main/kotlin")
+        }
+    }
 }
 
 kotlin {
@@ -109,6 +111,17 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
+    // Hilt Dependency Injection
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    
+    // OpenAPI Generated Code Dependencies
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.kotlinx.serialization.json)
+
     // Core library desugaring
     coreLibraryDesugaring(libs.coreLibraryDesugaring)
 
@@ -117,23 +130,22 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    // System interaction and documentation
-    implementation(libs.yuki) // If defined in libs.versions.toml
-    implementation(libs.lsposed) // If defined in libs.versions.toml
-    dokkaHtmlPlugin(libs.dokka)
+    // System interaction and documentation (using local JAR files)
+    implementation(files("${project.rootDir}/Libs/api-82.jar"))
+    implementation(files("${project.rootDir}/Libs/api-82-sources.jar"))
 }
 
 // Configure native build tasks
-tasks.whenTaskAdded { task ->
-    if (task.name.startsWith("externalNativeBuild")) {
-        task.dependsOn(":copyNativeLibs")
+tasks.configureEach {
+    if (name.startsWith("externalNativeBuild")) {
+        dependsOn(":copyNativeLibs")
     }
 }
 
 // Task to copy native libraries
 tasks.register<Copy>("copyNativeLibs") {
     from("${project.rootDir}/native-libs")
-    into("${buildDir}/native-libs")
+    into("${layout.buildDirectory.dir("native-libs").get()}")
     include("**/*.so")
     includeEmptyDirs = false
 }

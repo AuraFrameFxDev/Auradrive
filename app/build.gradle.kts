@@ -2,12 +2,13 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.android.application)
+    id("android-application-conventions")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.compose)
     id("org.openapi.generator") version "7.14.0"
-id("io.gitlab.arturbosch.detekt")
-    id("com.diffplug.spotless")}
+    id("io.gitlab.arturbosch.detekt")
+    id("com.diffplug.spotless")
+}
 
 android {
     namespace = "dev.aurakai.auraframefx"
@@ -120,6 +121,13 @@ dependencies {
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
+    
+    // OpenAPI Generated Code Dependencies
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.kotlinx.serialization.json)
 
     // Core library desugaring
     coreLibraryDesugaring(libs.coreLibraryDesugaring)
@@ -140,7 +148,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    // System interaction and documentation
-    // Remove implementation(libs.yuki) and implementation(libs.lsposed) if not defined in libs.versions.toml
+    // System interaction and documentation (using local JAR files)
+    implementation(files("${project.rootDir}/Libs/api-82.jar"))
+    implementation(files("${project.rootDir}/Libs/api-82-sources.jar"))
     // Dokka for documentation
 }
