@@ -5,9 +5,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp") version "1.0.16"
     id("org.openapi.generator") version "7.14.0"
-id("io.gitlab.arturbosch.detekt")
-    id("com.diffplug.spotless")}
+    id("io.gitlab.arturbosch.detekt")
+    id("com.diffplug.spotless")
+}
 
 android {
     namespace = "dev.aurakai.auraframefx"
