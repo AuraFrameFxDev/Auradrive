@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     
 
+    id("com.google.devtools.ksp")
     id("org.openapi.generator") version "7.14.0"
     id("io.gitlab.arturbosch.detekt")
     id("com.diffplug.spotless")

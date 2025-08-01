@@ -1,6 +1,6 @@
 [versions]
 # Build Tools
-agp = "8.11.1"
+agp = "8.13.0"
 gradle = "8.14.3"
 kotlin = "2.2.0"
 ksp = "2.2.0-2.0.2"  # Updated for Kotlin 2.2.0 compatibility
