@@ -41,7 +41,7 @@ lsposed = "1.9.2"
 dokka = "1.9.20"
 
 # Room Database (version)
-roomVersion = "2.6.1"
+roomVersion = "2.7.2"
 
 # OkHttp (additional)
 okhttp-core = "5.1.0"
