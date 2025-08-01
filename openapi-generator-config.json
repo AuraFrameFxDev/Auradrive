@@ -1,0 +1,9 @@
+{
+  "useCoroutines": true,
+  "serializationLibrary": "kotlinx_serialization",
+  "enumPropertyNaming": "UPPERCASE",
+  "parcelizeModels": true,
+  "dateLibrary": "java8",
+  "collectionType": "list",
+  "library": "jvm-retrofit2"
+}

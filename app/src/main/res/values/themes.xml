@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Theme overlay for action bar -->
+    <style name="ThemeOverlay.AuraFrameFX.ActionBar" parent="">
+        <item name="colorPrimary">@color/light_primary</item>
+    </style>
+</resources>

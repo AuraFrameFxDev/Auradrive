@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme for AppCompat -->
+    <style name="Theme.AuraFrameFX" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Surface colors -->
+        <item name="android:colorBackground">@color/light_background</item>
+        <!-- Text colors -->
+        <item name="android:textColor">@color/light_on_surface</item>
+        <item name="android:textColorPrimary">@color/light_on_surface</item>
+        <item name="android:textColorSecondary">@color/light_on_surface_variant</item>
+    </style>
+</resources>
