@@ -86,7 +86,7 @@ compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 
 # Code Quality
 spotless = { id = "com.diffplug.spotless", version = "7.2.1" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.6" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.8" }
 
 # Documentation
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
