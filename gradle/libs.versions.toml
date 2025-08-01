@@ -38,7 +38,7 @@ ndk = "26.2.11394342"
 # Documentation and System
 yuki = "2.0.1"
 lsposed = "1.9.2"
-dokka = "1.9.20"
+dokka = "2.0.0"
 
 # Room Database (version)
 roomVersion = "2.7.2"
