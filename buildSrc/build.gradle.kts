@@ -1,51 +1,11 @@
 plugins {
     `kotlin-dsl`
-    `kotlin-dsl-precompiled-script-plugins`
-    kotlin("jvm") version "2.2.0"
-}
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(24))
-        vendor.set(JvmVendorSpec.ADOPTIUM)
-    }
 }
 
 kotlin {
-    jvmToolchain(24)
-
+    jvmToolchain(24)  // <-- Toolchain for buildSrc itself
     compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_24)
-        freeCompilerArgs.addAll(
-            "-opt-in=kotlin.RequiresOptIn"
-        )
-        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
         languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
+        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
     }
-}
-
-dependencies {
-    // Build plugins
-    implementation("com.android.tools.build:gradle:8.13.0")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0")
-    implementation("com.google.devtools.ksp:symbol-processing-gradle-plugin:2.2.0-2.0.2")
-    implementation("com.google.dagger:hilt-android-gradle-plugin:2.58")
-    implementation("com.diffplug.spotless:spotless-plugin-gradle:7.2.1")
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.8")
-
-    // Testing
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation(gradleTestKit())
-}
-
-tasks.test {
-    useJUnitPlatform()
-
-    testLogging {
-        events("passed", "skipped", "failed")
-    }
-
-    systemProperty("gradle.test.kit.debug", "false")
 }
