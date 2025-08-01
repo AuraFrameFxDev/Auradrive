@@ -4,12 +4,6 @@ plugins {
     kotlin("jvm") version "2.2.0"
 }
 
-repositories {
-    gradlePluginPortal()
-    google()
-    mavenCentral()
-}
-
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(24))
@@ -32,10 +26,10 @@ kotlin {
 
 dependencies {
     // Build plugins
-    implementation("com.android.tools.build:gradle:8.12.0")
+    implementation("com.android.tools.build:gradle:8.13.0")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0")
     implementation("com.google.devtools.ksp:symbol-processing-gradle-plugin:2.2.0-2.0.2")
-    implementation("com.google.dagger:hilt-android-gradle-plugin:2.57")
+    implementation("com.google.dagger:hilt-android-gradle-plugin:2.58")
     implementation("com.diffplug.spotless:spotless-plugin-gradle:7.2.1")
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.8")
 
