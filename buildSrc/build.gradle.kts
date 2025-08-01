@@ -21,7 +21,7 @@ kotlin {
     jvmToolchain(24)
 
     compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_24)
+        jvmTarget.set(JavaLanguageVersion.of(24))
         freeCompilerArgs.addAll(
             "-opt-in=kotlin.RequiresOptIn"
         )
