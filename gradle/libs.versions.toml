@@ -66,7 +66,7 @@ compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 
 # Code Quality
 spotless = { id = "com.diffplug.spotless", version = "6.25.0" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.6" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.8" }
 
 [libraries]
 # AndroidX Core
