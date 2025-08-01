@@ -25,7 +25,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Genesis-Os"
+rootProject.name = "Genesis"
 
 // Include all modules
 include(":app")

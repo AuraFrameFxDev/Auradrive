@@ -23,7 +23,7 @@ lifecycle = "2.9.2"
 activityCompose = "1.10.1"
 
 # Hilt
-hilt = "2.57"
+hilt = "2.58"
 
 # Network
 retrofit = "3.0.0"
