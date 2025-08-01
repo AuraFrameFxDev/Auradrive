@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.compose)
+
     id(libs.plugins.ksp.get().pluginId) version libs.versions.ksp.get()
     id("org.openapi.generator") version "7.14.0"
     id("io.gitlab.arturbosch.detekt")
