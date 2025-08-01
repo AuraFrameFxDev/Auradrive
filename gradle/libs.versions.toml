@@ -47,7 +47,7 @@ roomVersion = "2.6.1"
 okhttp-core = "5.1.0"
 
 # Accompanist
-accompanist = "0.34.0"
+accompanist = "0.36.0"
 
 # Memory Leak Detection
 leakcanary = "2.14"
