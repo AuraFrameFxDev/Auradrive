@@ -41,7 +41,7 @@ dependencies {
     implementation("org.openapitools:openapi-generator-gradle-plugin:7.8.0")
 
     // Testing
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.13.4")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation(gradleTestKit())
